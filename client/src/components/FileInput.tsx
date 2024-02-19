@@ -66,7 +66,7 @@ const FileInput: React.FC = () => {
   return (
     <>
       <div
-        className="border-2 border-dashed rounded-lg border-sky-500 min-h-96 text-center w-full max-w-4xl mx-auto"
+        className="border-2 border-dashed rounded-lg border-sky-500 min-h-96 text-center w-full max-w-sm lg:max-w-4xl mx-auto"
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >

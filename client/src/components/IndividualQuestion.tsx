@@ -28,16 +28,18 @@ const IndividualQuestion: React.FC<IIndividualQuestion> = ({ question }) => {
 
   return (
     <>
-      <div className="flex justify-between items-center max-w-6xl mx-auto my-8 w-full">
-        <p className="font-semibold text-xl">{question}</p>
+      <div className="flex flex-col lg:flex-row justify-between items-center max-w-4xl  mx-auto my-8 w-full">
+        <p className="font-semibold text-md lg:text-xl">{question}</p>
         {ans.data ? (
-          <p className="font-semibold text-xl">{ans.data}</p>
+          <p className="font-semibold text-md lg:text-xl">
+            {"Ans:" + ans.data}
+          </p>
         ) : (
           <button
             className="bg-blue-400 px-4 py-2 rounded-md font-semibold text-white"
             onClick={() => handleAnswer()}
           >
-            {ans.loading ? <SpinnerIcon /> : "Error occured"}
+            {ans.loading ? <SpinnerIcon /> : "Answer"}
           </button>
         )}
       </div>

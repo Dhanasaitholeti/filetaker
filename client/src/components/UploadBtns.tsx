@@ -16,8 +16,8 @@ const UploadBtns: React.FC<UploadBtnProps> = ({
 }) => {
   return (
     <>
-      <div className="flex justify-center items-center w-36 aspect-square bg-sky-300 mx-auto rounded-full mt-10">
-        <FaFile size={64} color="blue" />
+      <div className="flex justify-center items-center w-20 lg:w-36 aspect-square bg-sky-300 mx-auto rounded-full mt-10">
+        <FaFile size={40} color="blue" />
       </div>
       <p className="text-2xl">Drop your file here</p>
       <span>----or----</span>
@@ -25,7 +25,7 @@ const UploadBtns: React.FC<UploadBtnProps> = ({
         <input
           type="file"
           ref={fileInputRef}
-          style={{ display: "none" }}
+          className="hidden"
           onChange={handleFileChange}
         />
         <button

@@ -2,7 +2,7 @@ import FileInput from "../components/FileInput";
 
 const HomeScreen: React.FC = () => {
   return (
-    <div className="flex h-[60%] flex-col justify-center align-middle">
+    <div className="flex flex-col justify-center align-middle mt-10">
       <FileInput />
     </div>
   );
