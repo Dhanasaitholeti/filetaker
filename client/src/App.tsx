@@ -1,10 +1,11 @@
+import RootLayout from "./Layout";
 import RouteManager from "./routes/RouteManager";
 
-const App = () => {
+const App: React.FC = () => {
   return (
-    <>
+    <RootLayout>
       <RouteManager />
-    </>
+    </RootLayout>
   );
 };
 

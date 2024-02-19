@@ -1,7 +1,9 @@
-const HomeScreen = () => {
+import FileInput from "../components/FileInput";
+
+const HomeScreen: React.FC = () => {
   return (
     <div>
-      <h1>This is Home Screen</h1>
+      <FileInput />
     </div>
   );
 };
