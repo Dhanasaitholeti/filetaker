@@ -1,8 +1,10 @@
 import axios from "axios";
-import { ChangeEvent, DragEvent, useState } from "react";
+import { ChangeEvent, DragEvent, useRef, useState } from "react";
+import UploadBtns from "./UploadBtns";
 
 const FileInput: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
@@ -24,7 +26,6 @@ const FileInput: React.FC = () => {
       alert("Please select a file first.");
       return;
     }
-
     const formData = new FormData();
     formData.append("file", selectedFile);
 
@@ -41,10 +42,16 @@ const FileInput: React.FC = () => {
     }
   };
 
+  const handleButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   return (
     <>
       <div
-        className="border-2 border-dashed border-sky-500 p-8 text-center w-full max-w-lg mx-auto"
+        className="border-2 border-dashed rounded-lg border-sky-500 min-h-96 text-center w-full max-w-4xl mx-auto"
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
@@ -54,7 +61,12 @@ const FileInput: React.FC = () => {
             <p>File size: {selectedFile.size} bytes</p>
           </div>
         ) : (
-          <p className="text-2xl">Select your file</p>
+          <UploadBtns
+            fileInputRef={fileInputRef}
+            handleButtonClick={handleButtonClick}
+            selectedFile={selectedFile}
+            handleFileChange={handleFileChange}
+          />
         )}
         <label htmlFor="file" className="hidden">
           File input
@@ -69,7 +81,12 @@ const FileInput: React.FC = () => {
       </div>
       <button
         onClick={handleSubmit}
-        className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        disabled={!selectedFile}
+        className={`mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded max-w-xs w-full mx-auto ${
+          selectedFile
+            ? ""
+            : "disabled:bg-gray-400 disabled:text-black cursor-not-allowed"
+        }`}
       >
         Submit
       </button>
