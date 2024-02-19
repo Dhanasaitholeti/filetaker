@@ -1,3 +1,4 @@
+import axios from "axios";
 import { ChangeEvent, DragEvent, useState } from "react";
 
 const FileInput: React.FC = () => {
@@ -16,6 +17,28 @@ const FileInput: React.FC = () => {
 
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+  };
+
+  const handleSubmit = async () => {
+    if (!selectedFile) {
+      alert("Please select a file first.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    try {
+      await axios.post("http://localhost:8000/file/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      alert("File submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting file:", error);
+      alert("An error occurred while submitting the file.");
+    }
   };
 
   return (
@@ -39,10 +62,17 @@ const FileInput: React.FC = () => {
         <input
           id="file"
           type="file"
+          name="file"
           onChange={handleFileChange}
           className="hidden"
         />
       </div>
+      <button
+        onClick={handleSubmit}
+        className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Submit
+      </button>
     </>
   );
 };

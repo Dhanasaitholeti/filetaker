@@ -16,24 +16,21 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-userRoutes.post("/file", async (req, res) => {
+userRoutes.post("/", upload.single("file"), async (req, res) => {
   try {
     // Create a new instance of your Mongoose model
-    const newFile = new fileModel({
+    const newFile = await fileModel.create({
       name: req.file.originalname,
       file: await fs.readFile(req.file.path), // Read the file from disk
       fileSize: req.file.size,
     });
-
-    // Save the file to MongoDB
-    await newFile.save();
-
     // Remove the temporary file
     fs.unlink(req.file.path);
-
     res.status(200).send("File uploaded successfully!");
   } catch (err) {
     console.error(err);
     res.status(500).send("Error uploading file.");
   }
 });
+
+export default userRoutes;
