@@ -1,1 +1,7 @@
-import express from "express";
+import express, { Application } from "express";
+
+const app: Application = express();
+
+app.listen(8000, () => {
+  console.log(`server running on http://localhost:8000`);
+});
