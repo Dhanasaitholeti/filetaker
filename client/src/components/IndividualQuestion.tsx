@@ -20,7 +20,7 @@ const IndividualQuestion: React.FC<IIndividualQuestion> = ({ question }) => {
     setAns({ data: null, error: false, loading: true });
     try {
       const result = await axios.get(
-        "https://filetaker.onrender.com//file/question"
+        "https://filetaker.onrender.com/file/question"
       );
       setAns({ data: result.data, loading: false, error: false });
     } catch (error) {

@@ -44,7 +44,7 @@ const FileInput: React.FC = () => {
 
     try {
       const result = await axios.post(
-        "https://filetaker.onrender.com//file/",
+        "https://filetaker.onrender.com/file/",
         formData,
         {
           headers: {
