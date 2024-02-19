@@ -43,11 +43,15 @@ const FileInput: React.FC = () => {
     formData.append("file", selectedFile);
 
     try {
-      const result = await axios.post("http://localhost:8000/file/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const result = await axios.post(
+        "https://filetaker.onrender.com//file/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       setQueryState({ data: result.data, error: false, isLoading: false });
       toast.success("File submitted successfully!");
     } catch (error) {

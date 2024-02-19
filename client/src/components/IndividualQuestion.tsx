@@ -19,7 +19,9 @@ const IndividualQuestion: React.FC<IIndividualQuestion> = ({ question }) => {
   const handleAnswer = async () => {
     setAns({ data: null, error: false, loading: true });
     try {
-      const result = await axios.get("http://localhost:8000/file/question");
+      const result = await axios.get(
+        "https://filetaker.onrender.com//file/question"
+      );
       setAns({ data: result.data, loading: false, error: false });
     } catch (error) {
       setAns({ data: null, loading: false, error: true });
