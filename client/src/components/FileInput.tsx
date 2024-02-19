@@ -1,6 +1,9 @@
 import axios from "axios";
 import { ChangeEvent, DragEvent, useRef, useState } from "react";
 import UploadBtns from "./UploadBtns";
+import { useNavigate } from "react-router-dom";
+import FileData from "./FileData";
+import { isValidFile } from "../utils/validFile";
 
 const FileInput: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -9,29 +12,17 @@ const FileInput: React.FC = () => {
     error: false,
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
-    if (file) {
-      const filename = file.name.toLowerCase();
-      const size = file.size;
-      if (size > 10 * 1024 * 1024) {
-        alert("Please select a file smaller than 10 MB.");
-        return;
-      }
-      const fileExtension = filename.split(".").pop();
-      if (fileExtension !== "pdf") {
-        alert("Please select a PDF file.");
-        return;
-      }
-    }
-    setSelectedFile(file);
+    if (file) isValidFile(file) && setSelectedFile(file);
   };
 
   const handleDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
-    setSelectedFile(file);
+    if (file) isValidFile(file) && setSelectedFile(file);
   };
 
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
@@ -77,10 +68,7 @@ const FileInput: React.FC = () => {
         onDragOver={handleDragOver}
       >
         {selectedFile ? (
-          <div>
-            <p>Selected file: {selectedFile.name}</p>
-            <p>File size: {selectedFile.size} bytes</p>
-          </div>
+          <FileData size={selectedFile.size} name={selectedFile.name} />
         ) : (
           <UploadBtns
             fileInputRef={fileInputRef}
@@ -101,9 +89,13 @@ const FileInput: React.FC = () => {
         />
       </div>
       <button
-        onClick={handleSubmit}
+        onClick={
+          queryState.data ? () => navigate("/questionnaire") : handleSubmit
+        }
         disabled={!selectedFile}
-        className={`mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded max-w-xs w-full mx-auto ${
+        className={`mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded max-w-xs w-full mx-auto
+        ${queryState.data && "bg-emerald-400"}
+        ${
           selectedFile
             ? ""
             : "disabled:bg-gray-400 disabled:text-black cursor-not-allowed"
