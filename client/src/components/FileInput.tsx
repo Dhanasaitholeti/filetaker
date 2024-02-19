@@ -21,7 +21,7 @@ const FileInput: React.FC = () => {
   return (
     <>
       <div
-        className="border border-dashed border-black p-8 text-center w-full max-w-lg"
+        className="border-2 border-dashed border-sky-500 p-8 text-center w-full max-w-lg mx-auto"
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
@@ -31,7 +31,7 @@ const FileInput: React.FC = () => {
             <p>File size: {selectedFile.size} bytes</p>
           </div>
         ) : (
-          <p>Select your file</p>
+          <p className="text-2xl">Select your file</p>
         )}
         <label htmlFor="file" className="hidden">
           File input

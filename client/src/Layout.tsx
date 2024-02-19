@@ -9,7 +9,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
     <>
       <div className="bg-slate-100 h-screen flex flex-col">
         <Navbar />
-        <main className="flex-grow flex flex-col justify-center align-middle">
+        <main className="flex-grow">
           {children}
         </main>
       </div>
