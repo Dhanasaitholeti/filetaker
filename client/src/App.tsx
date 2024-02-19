@@ -1,11 +1,15 @@
+import { Toaster } from "react-hot-toast";
 import RootLayout from "./Layout";
 import RouteManager from "./routes/RouteManager";
 
 const App: React.FC = () => {
   return (
-    <RootLayout>
-      <RouteManager />
-    </RootLayout>
+    <>
+      <Toaster />
+      <RootLayout>
+        <RouteManager />
+      </RootLayout>
+    </>
   );
 };
 

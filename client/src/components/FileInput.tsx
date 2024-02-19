@@ -4,6 +4,7 @@ import UploadBtns from "./UploadBtns";
 import { useNavigate } from "react-router-dom";
 import FileData from "./FileData";
 import { isValidFile } from "../utils/validFile";
+import toast from "react-hot-toast";
 
 const FileInput: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -31,7 +32,7 @@ const FileInput: React.FC = () => {
 
   const handleSubmit = async () => {
     if (!selectedFile) {
-      alert("Please select a file first.");
+      toast.error("Please select a file first.");
       return;
     }
 
@@ -44,13 +45,12 @@ const FileInput: React.FC = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(result);
       setQueryState({ data: result.data, error: false });
-      alert("File submitted successfully!");
+      toast.success("File submitted successfully!");
     } catch (error) {
       console.error("Error submitting file:", error);
       setQueryState({ data: undefined, error: true });
-      alert("An error occurred while submitting the file.");
+      toast.error("An error occurred while submitting the file.");
     }
   };
 
