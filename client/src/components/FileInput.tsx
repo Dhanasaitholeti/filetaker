@@ -4,10 +4,27 @@ import UploadBtns from "./UploadBtns";
 
 const FileInput: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [queryState, setQueryState] = useState({
+    data: undefined,
+    error: false,
+  });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
+    if (file) {
+      const filename = file.name.toLowerCase();
+      const size = file.size;
+      if (size > 10 * 1024 * 1024) {
+        alert("Please select a file smaller than 10 MB.");
+        return;
+      }
+      const fileExtension = filename.split(".").pop();
+      if (fileExtension !== "pdf") {
+        alert("Please select a PDF file.");
+        return;
+      }
+    }
     setSelectedFile(file);
   };
 
@@ -26,18 +43,22 @@ const FileInput: React.FC = () => {
       alert("Please select a file first.");
       return;
     }
+
     const formData = new FormData();
     formData.append("file", selectedFile);
 
     try {
-      await axios.post("http://localhost:8000/file/", formData, {
+      const result = await axios.post("http://localhost:8000/file/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+      console.log(result);
+      setQueryState({ data: result.data, error: false });
       alert("File submitted successfully!");
     } catch (error) {
       console.error("Error submitting file:", error);
+      setQueryState({ data: undefined, error: true });
       alert("An error occurred while submitting the file.");
     }
   };
@@ -88,7 +109,7 @@ const FileInput: React.FC = () => {
             : "disabled:bg-gray-400 disabled:text-black cursor-not-allowed"
         }`}
       >
-        Submit
+        {queryState.data ? "Generate Questions" : "Submit"}
       </button>
     </>
   );

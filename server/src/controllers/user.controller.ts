@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import fs from "fs/promises";
-import fileModel from "models/file.model";
+import fileModel from "../models/file.model";
 import { v4 as uuidv4 } from "uuid";
 
 export const uploadFile = async (req: Request, res: Response) => {
@@ -24,5 +24,5 @@ export const uploadFile = async (req: Request, res: Response) => {
 
 export const answerTheQUestion = (req: Request, res: Response) => {
   const randomString = uuidv4();
-  res.status(200).json({ answer: randomString });
+  res.status(200).send(randomString);
 };
