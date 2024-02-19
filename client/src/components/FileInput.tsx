@@ -21,7 +21,7 @@ const FileInput: React.FC = () => {
   return (
     <>
       <div
-        className="border-2 border-dashed border-black p-4 text-center max-w-lg"
+        className="border border-dashed border-black p-8 text-center w-full max-w-lg"
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
