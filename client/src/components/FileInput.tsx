@@ -11,6 +11,7 @@ const FileInput: React.FC = () => {
   const [queryState, setQueryState] = useState({
     data: undefined,
     error: false,
+    isLoading: false,
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -31,6 +32,8 @@ const FileInput: React.FC = () => {
   };
 
   const handleSubmit = async () => {
+    setQueryState({ data: undefined, error: false, isLoading: true });
+
     if (!selectedFile) {
       toast.error("Please select a file first.");
       return;
@@ -45,11 +48,11 @@ const FileInput: React.FC = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      setQueryState({ data: result.data, error: false });
+      setQueryState({ data: result.data, error: false, isLoading: false });
       toast.success("File submitted successfully!");
     } catch (error) {
       console.error("Error submitting file:", error);
-      setQueryState({ data: undefined, error: true });
+      setQueryState({ data: undefined, error: true, isLoading: false });
       toast.error("An error occurred while submitting the file.");
     }
   };

@@ -1,6 +1,6 @@
 import multer from "multer";
 import { Router } from "express";
-import { uploadFile } from "../controllers/user.controller";
+import { answerTheQUestion, uploadFile } from "../controllers/user.controller";
 
 const userRoutes = Router();
 // Set up Multer storage
@@ -17,6 +17,6 @@ const upload = multer({ storage: storage });
 
 userRoutes.post("/", upload.single("file"), uploadFile);
 
-userRoutes.post("/question",);
+userRoutes.get("/question", answerTheQUestion);
 
 export default userRoutes;
