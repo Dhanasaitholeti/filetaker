@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import FileData from "./FileData";
 import { isValidFile } from "../utils/validFile";
 import toast from "react-hot-toast";
+import SpinnerIcon from "./Spinner";
 
 const FileInput: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -95,21 +96,28 @@ const FileInput: React.FC = () => {
           className="hidden"
         />
       </div>
-      <button
-        onClick={
-          queryState.data ? () => navigate("/questionnaire") : handleSubmit
-        }
-        disabled={!selectedFile}
-        className={`mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded max-w-xs w-full mx-auto
+
+      {queryState.isLoading ? (
+        <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded max-w-xs w-full mx-auto flex justify-center ">
+          <SpinnerIcon />
+        </button>
+      ) : (
+        <button
+          onClick={
+            queryState.data ? () => navigate("/questionnaire") : handleSubmit
+          }
+          disabled={!selectedFile}
+          className={`mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded max-w-xs w-full mx-auto
         ${queryState.data && "bg-emerald-400"}
         ${
           selectedFile
             ? ""
             : "disabled:bg-gray-400 disabled:text-black cursor-not-allowed"
         }`}
-      >
-        {queryState.data ? "Generate Questions" : "Submit"}
-      </button>
+        >
+          {queryState.data ? "Generate Questions" : "Submit"}
+        </button>
+      )}
     </>
   );
 };
